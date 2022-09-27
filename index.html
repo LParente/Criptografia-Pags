@@ -67,24 +67,23 @@
             <form class="form-signin">
 
                 <label>Credit card number</label>
-                <input type="number" placeholder="Credit card number" id="number" maxlenth=16 value="" class="form-control" /></br>
+                <input type="text" placeholder="Credit card number" id="number" value="5555666677778884" maxlength="16" value="" class="form-control" /></br>
                 <label>CVC</label>
-                <input type="number" placeholder="CVC" id="cvc" value="123" maxlength=4 class="form-control" /></br>
+                <input type="text" placeholder="CVC" id="cvc" value="123" maxlength="4" class="form-control" /></br>
                 <div class="row">
                     <div class="col-md-4">
                         <label>Expiration Month</label>
-                        <input type="number" placeholder="Month" id="month" value="12" min=1 max=12 class="form-control" /></br>
+                        <input type="text" placeholder="Month" id="month" maxlength="2" value="12" min="1" max="12" pattern="[0-9]{2}" class="form-control" /></br>
                     </div>
                     <div class="col-md-4">
                         <label>Expiration Year</label>
-                        <input type="number" placeholder="Year" id="year" value="2030" maxlength=4 class="form-control" /></br>
+                        <input type="text" placeholder="Year" id="year" maxlength="4" value="2030" min="1900" max="2099" pattern="[0-9]{4}" class="form-control" /></br>
                     </div>
                     <div class="col-md-4"></div>
                 </div>
                 <label>Holder</label>
                 <input type="text" placeholder="Holder" id="holder" value="Joãozinho da Silva" class="form-control" /></br>
                 <input type="button" value="Encrypt" id="encrypt" class="btn btn-lg btn-success btn-block" />
-
             </form>
 
         </div>
