@@ -67,17 +67,17 @@
             <form class="form-signin">
 
                 <label>Credit card number</label>
-                <input type="text" placeholder="Credit card number" id="number" value="" class="form-control" /></br>
+                <input type="number" placeholder="Credit card number" id="number" maxlenth=16 value="" class="form-control" /></br>
                 <label>CVC</label>
-                <input type="text" placeholder="CVC" id="cvc" value="123" maxlength=4 class="form-control" /></br>
+                <input type="number" placeholder="CVC" id="cvc" value="123" maxlength=4 class="form-control" /></br>
                 <div class="row">
                     <div class="col-md-4">
                         <label>Expiration Month</label>
-                        <input type="text" placeholder="Month" id="month" value="12" maxlength=2 class="form-control" /></br>
+                        <input type="number" placeholder="Month" id="month" value="12" min=1 max=12 class="form-control" /></br>
                     </div>
                     <div class="col-md-4">
                         <label>Expiration Year</label>
-                        <input type="text" placeholder="Year" id="year" value="2030" maxlength=4 class="form-control" /></br>
+                        <input type="number" placeholder="Year" id="year" value="2030" maxlength=4 class="form-control" /></br>
                     </div>
                     <div class="col-md-4"></div>
                 </div>
