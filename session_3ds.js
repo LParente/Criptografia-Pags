@@ -9,7 +9,7 @@ xhttp.open(
 );  
 xhttp.setRequestHeader(
     "Authorization",
-    "Bearer F40E14BF49F141BEAE665E87C1A949AE",
+    "Bearer tokenSandbox",
     "Access-Control-Allow-Origin",
     "*",
     "Access-Control-Allow-Headers",
