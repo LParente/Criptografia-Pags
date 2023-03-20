@@ -11,17 +11,23 @@
 
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-
   <!-- Optional theme -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
 
-  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
-
-  <!-- pags.js -->
-  <script src="https://assets.pagseguro.com.br/checkout-sdk-js/rc/dist/browser/pagseguro.min.js"></script>
-
   <!-- Latest compiled and minified JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+
+  <!-- PagSeguro.js -->
+  <script src="https://assets.pagseguro.com.br/checkout-sdk-js/rc/dist/browser/pagseguro.min.js"></script>
+
+
+  <style>
+    .classMaster{
+      display: flex;
+      justify-content: center;
+    }
+  </style>
 </head>
 
 
@@ -57,8 +63,7 @@
     <a href="form_3ds.html">Validação com 3DS</a>
   </div>
   <hr>
-  <div class="form-row align-items-center justify-content-center">
-    <div class="col-md-2"></div>
+  <div class="classMaster">
     <form class="form-group col-sm-4">
       <div class="form-group">
         <label>Credit card number</label>
@@ -89,7 +94,6 @@
       <label>Credit Card Hash</label>
       <textarea id="encrypted_value" rows="8" class="form-control" disabled=""></textarea></br>
     </div>
-    <div class="col-md-2"></div>
   </div>
 
   </div>
