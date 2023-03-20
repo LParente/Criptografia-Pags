@@ -172,6 +172,13 @@
     });
 
   </script>
+
+<style>
+  .classMaster{
+    display: flex;
+    justify-content: center;
+  }
+</style>
 </head>
 
 <body>
@@ -181,8 +188,8 @@
   </div>
   <hr>
     <form>
-      <div class="form-row align-items-center">
-        <div class="form-group col-sm-4">
+      <div class="classMaster">
+        <div class="form-group col-sm-3">
           <label>Public Key</label>
           <textarea id="public_key" rows="12" placeholder="Enter Public Key" class="form-control"></textarea>
           <br>
@@ -192,7 +199,7 @@
           <label>3DS ID</label>
           <textarea id="3ds_autentication" rows="2" class="form-control" disabled></textarea>
         </div>
-        <div class="form-group col-sm-4">
+        <div class="form-group col-sm-3">
           <div class="form-group">
             <label>CC Holder</label>
             <input type="text" placeholder="Holder" id="holder" value="Joãozinho da Silva" class="form-control">
@@ -259,7 +266,7 @@
           <br>
           <input type="button" value="3DS Auth" id="3ds_auth" class="btn btn-lg btn-success btn-block">
         </div>
-        <div class="form-group col-sm-4">
+        <div class="form-group col-sm-3">
           <div class="form-group">
             <label>Customer Info</label>
             <input type="text" placeholder="Holder" id="customer" value="Joãozinho da Silva" class="form-control"><br>
