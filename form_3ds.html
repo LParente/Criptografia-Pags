@@ -67,7 +67,7 @@
               }
             },
             amount: {
-              value: 1000,
+              value: $("#price").val(),
               currency: 'BRL'
             },
             dataOnly: false
@@ -173,12 +173,12 @@
 
   </script>
 
-<style>
-  .classMaster{
-    display: flex;
-    justify-content: center;
-  }
-</style>
+  <style>
+    .classMaster {
+      display: flex;
+      justify-content: center;
+    }
+  </style>
 </head>
 
 <body>
@@ -187,47 +187,49 @@
     <a href="index.html">Criptografia Comum</a>
   </div>
   <hr>
-    <form>
-      <div class="classMaster">
-        <div class="form-group col-sm-3">
-          <label>Public Key</label>
-          <textarea id="public_key" rows="12" placeholder="Enter Public Key" class="form-control"></textarea>
+  <form>
+    <div class="classMaster">
+      <div class="form-group col-sm-3">
+        <label>Public Key</label>
+        <textarea id="public_key" rows="12" placeholder="Enter Public Key" class="form-control"></textarea>
+        <br>
+        <label>Credit Card Hash</label>
+        <textarea id="encrypted_value" rows="8" class="form-control" disabled></textarea>
+        <br>
+        <label>3DS ID</label>
+        <textarea id="3ds_autentication" rows="2" class="form-control" disabled></textarea>
+      </div>
+      <div class="form-group col-sm-3">
+        <div class="form-group">
+          <label>CC Holder</label>
+          <input type="text" placeholder="Holder" id="holder" value="Joãozinho da Silva" class="form-control">
           <br>
-          <label>Credit Card Hash</label>
-          <textarea id="encrypted_value" rows="8" class="form-control" disabled></textarea>
+          <label>Credit card number</label>
+          <input type="text" placeholder="Credit card number" id="cardnumber" value="5200000000001104"
+            inputmode="numeric" pattern="[0-9]{15,16}" minlength="15" maxlength="16" class="form-control">
           <br>
-          <label>3DS ID</label>
-          <textarea id="3ds_autentication" rows="2" class="form-control" disabled></textarea>
-        </div>
-        <div class="form-group col-sm-3">
-          <div class="form-group">
-            <label>CC Holder</label>
-            <input type="text" placeholder="Holder" id="holder" value="Joãozinho da Silva" class="form-control">
-            <br>
-            <label>Credit card number</label>
-            <input type="text" placeholder="Credit card number" id="cardnumber" value="5200000000001104"
-              inputmode="numeric" pattern="[0-9]{15,16}" minlength="15" maxlength="16" class="form-control">
-            <br>
-            <div class="row">
-              <div class="col-md-4">
-                <label>CVC</label>
-                <input type="number" placeholder="CVC" id="cvc" value="123" min="0000" max="9999"
-                  class="form-control"><br>
-              </div>
-              <div class="col-md-4">
-                <label>Exp Month</label>
-                <input type="number" placeholder="Month" id="month" value="12" min="1" max="12" pattern="[0-9]{2}"
-                  class="form-control" required=""><br>
-              </div>
-              <div class="col-md-4">
-                <label>Exp Year</label>
-                <input type="number" placeholder="Year" id="year" value="2030" min="1900" max="2099" pattern="[0-9]{4}"
-                  class="form-control" required=""><br>
-              </div>
+          <div class="row">
+            <div class="col-md-4">
+              <label>CVC</label>
+              <input type="number" placeholder="CVC" id="cvc" value="123" min="0000" max="9999"
+                class="form-control"><br>
+            </div>
+            <div class="col-md-4">
+              <label>Exp Month</label>
+              <input type="number" placeholder="Month" id="month" value="12" min="1" max="12" pattern="[0-9]{2}"
+                class="form-control" required=""><br>
+            </div>
+            <div class="col-md-4">
+              <label>Exp Year</label>
+              <input type="number" placeholder="Year" id="year" value="2030" min="1900" max="2099" pattern="[0-9]{4}"
+                class="form-control" required=""><br>
             </div>
           </div>
-          <br>
-          <div class="form-group">
+        </div>
+        <br>
+
+        <div class="row">
+          <div class="col-md-6">
             <label for="installments">Installments</label>
             <select class="form-control" id="installments">
               <option>1</option>
@@ -243,77 +245,83 @@
               <option>11</option>
               <option>12</option>
             </select>
-            <br>
-            <label for="metodoPagamento">Payment Form</label>
-            <select class="form-control" id="metodoPagamento">
-              <option>DEBIT_CARD</option>
-              <option>CREDIT_CARD</option>
-            </select>
           </div>
-          <br>
-          <div class="form-group">
-            <label for="env3ds">Environment</label>
-            <select class="form-control" id="env3ds">
-              <option>SANDBOX</option>
-              <option>PROD</option>
-            </select>
-            <br>
-            <label>Sessão 3DS</label>
-            <textarea id="session3ds" placeholder="Token de sessão" rows="2" class="form-control"></textarea>
+          <div class="col-md-6">
+            <label for="price">Preço</label>
+            <input type="number" placeholder="Value in cents" id="price" value=1005 class="form-control">
           </div>
-          <br>
-          <input type="button" value="Encrypt" id="encryptCard" class="btn btn-lg btn-success btn-block">
-          <br>
-          <input type="button" value="3DS Auth" id="3ds_auth" class="btn btn-lg btn-success btn-block">
         </div>
-        <div class="form-group col-sm-3">
+
+        <br>
+        <label for="metodoPagamento">Payment Form</label>
+        <select class="form-control" id="metodoPagamento">
+          <option>DEBIT_CARD</option>
+          <option>CREDIT_CARD</option>
+        </select>
+        <br>
+        <div class="form-group">
+          <label for="env3ds">Environment</label>
+          <select class="form-control" id="env3ds">
+            <option>SANDBOX</option>
+            <option>PROD</option>
+          </select>
+          <br>
+          <label>Sessão 3DS</label>
+          <textarea id="session3ds" placeholder="Token de sessão" rows="2" class="form-control"></textarea>
+        </div>
+        <br>
+        <input type="button" value="Encrypt" id="encryptCard" class="btn btn-lg btn-success btn-block">
+        <br>
+        <input type="button" value="3DS Auth" id="3ds_auth" class="btn btn-lg btn-success btn-block">
+      </div>
+      <div class="form-group col-sm-3">
+        <div class="form-group">
+          <label>Customer Info</label>
+          <input type="text" placeholder="Holder" id="customer" value="Joãozinho da Silva" class="form-control"><br>
+          <label>Mail</label>
+          <input type="email" placeholder="e-mail" id="mail" value="joaozinho123@teste.com" class="form-control"><br>
+          <label>Phone Info</label>
+          <div class="row">
+            <div class="col-md-4">
+              <input type="text" placeholder="Country" value=55 id="Country" class="form-control">
+            </div>
+            <div class="col-md-4">
+              <input type="text" placeholder="DDD" value=11 id="DDD" class="form-control">
+            </div>
+            <div class="col-md-4">
+              <input type="text" placeholder="Phone" value=999999999 id="Phone" class="form-control">
+            </div>
+          </div>
+          <br>
+          <label>Billing Address</label>
           <div class="form-group">
-            <label>Customer Info</label>
-            <input type="text" placeholder="Holder" id="customer" value="Joãozinho da Silva" class="form-control"><br>
-            <label>Mail</label>
-            <input type="email" placeholder="e-mail" id="mail" value="joaozinho123@teste.com" class="form-control"><br>
-            <label>Phone Info</label>
-            <div class="row">
-              <div class="col-md-4">
-                <input type="text" placeholder="Country" value=55 id="Country" class="form-control">
-              </div>
-              <div class="col-md-4">
-                <input type="text" placeholder="DDD" value=11 id="DDD" class="form-control">
-              </div>
-              <div class="col-md-4">
-                <input type="text" placeholder="Phone" value=999999999 id="Phone" class="form-control">
-              </div>
+            <input type="text" placeholder="street" id="street" class="form-control" value="Rua Doutor Mario Ferraz">
+            <input type="text" placeholder="number" id="number" class="form-control" value="123">
+            <input type="text" placeholder="complement" id="complement" class="form-control" value="123">
+            <input type="text" placeholder="state" id="regionCode" class="form-control" value="SP">
+            <input type="text" placeholder="country" id="country" class="form-control" value="BRA">
+            <input type="text" placeholder="city" id="city" class="form-control" value="Sao Paulo">
+            <input type="text" placeholder="postalCode" id="postalCode" class="form-control" value="01453010">
+          </div>
+          <br>
+          <label>Shipping Address</label>
+          <div class="form-group">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="sameAddressCheck">
+              <label class="form-check-label" for="sameAddressCheck">
+                Mesmo endereço?
+              </label>
             </div>
-            <br>
-            <label>Billing Address</label>
-            <div class="form-group">
-              <input type="text" placeholder="street" id="street" class="form-control" value="Rua Doutor Mario Ferraz">
-              <input type="text" placeholder="number" id="number" class="form-control" value="123">
-              <input type="text" placeholder="complement" id="complement" class="form-control" value="123">
-              <input type="text" placeholder="state" id="regionCode" class="form-control" value="SP">
-              <input type="text" placeholder="country" id="country" class="form-control" value="BRA">
-              <input type="text" placeholder="city" id="city" class="form-control" value="Sao Paulo">
-              <input type="text" placeholder="postalCode" id="postalCode" class="form-control" value="01453010">
-            </div>
-            <br>
-            <label>Shipping Address</label>
-            <div class="form-group">
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="sameAddressCheck">
-                <label class="form-check-label" for="sameAddressCheck">
-                  Mesmo endereço?
-                </label>
-              </div>
-              <input type="text" placeholder="street" id="streetShipping" class="form-control">
-              <input type="text" placeholder="number" id="numberShipping" class="form-control">
-              <input type="text" placeholder="complement" id="complementShipping" class="form-control">
-              <input type="text" placeholder="state" id="regionCodeShipping" class="form-control">
-              <input type="text" placeholder="country" id="countryShipping" class="form-control">
-              <input type="text" placeholder="city" id="cityShipping" class="form-control">
-              <input type="text" placeholder="postalCode" id="postalCodeShipping" class="form-control">
-            </div>
+            <input type="text" placeholder="street" id="streetShipping" class="form-control">
+            <input type="text" placeholder="number" id="numberShipping" class="form-control">
+            <input type="text" placeholder="complement" id="complementShipping" class="form-control">
+            <input type="text" placeholder="state" id="regionCodeShipping" class="form-control">
+            <input type="text" placeholder="country" id="countryShipping" class="form-control">
+            <input type="text" placeholder="city" id="cityShipping" class="form-control">
+            <input type="text" placeholder="postalCode" id="postalCodeShipping" class="form-control">
           </div>
         </div>
       </div>
-    </form>
+    </div>
+  </form>
 </body>
