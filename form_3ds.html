@@ -149,24 +149,63 @@
       });
 
       $("#encryptCard").click(function () {
-        var cc = PagSeguro.encryptCard({
-          number: $("#cardnumber").val().replace(/\s/g, ''),
-          securityCode: $("#cvc").val(),
-          expMonth: $("#month").val(),
-          expYear: $("#year").val(),
-          publicKey: $("#public_key").val(),
-          holder: $("#holder").val()
-        });
-        console.log(cc);
-        if (cc.hasErrors) {
-          var printaErros = "";
-          cc.errors.forEach(element => {
-            printaErros += element.message + "\n";
-          });
+        if (!$("#public_key").val()) {
+          console.log('entrou no get public');
+          var myHeaders = new Headers();
+          myHeaders.append("Authorization", "Bearer " + $("#session3ds").val());
 
-          $("#encrypted_value").val(printaErros);
+          var requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow'
+          };
+
+          fetch("https://sandbox.sdk.pagseguro.com/checkout-sdk/public-key", requestOptions)
+            .then(response => response.json())
+            // .then(result => console.log(result))
+            .then(result => {
+              console.log(result.publicKey);
+              $("#public_key").val(result.publicKey)
+              var cc = PagSeguro.encryptCard({
+                number: $("#cardnumber").val().replace(/\s/g, ''),
+                securityCode: $("#cvc").val(),
+                expMonth: $("#month").val(),
+                expYear: $("#year").val(),
+                publicKey: $("#public_key").val(),
+                holder: $("#holder").val()
+              });
+              console.log(cc);
+              if (cc.hasErrors) {
+                var printaErros = "";
+                cc.errors.forEach(element => {
+                  printaErros += element.message + "\n";
+                });
+
+                $("#encrypted_value").val(printaErros);
+              } else {
+                $("#encrypted_value").val(cc.encryptedCard);
+              }
+            })
+            .catch(error => console.log('error', error));
+
         } else {
-          $("#encrypted_value").val(cc.encryptedCard);
+          var cc = PagSeguro.encryptCard({
+            number: $("#cardnumber").val().replace(/\s/g, ''),
+            securityCode: $("#cvc").val(),
+            expMonth: $("#month").val(),
+            expYear: $("#year").val(),
+            publicKey: $("#public_key").val(),
+            holder: $("#holder").val()
+          });
+          console.log(cc);
+          if (cc.hasErrors) {
+            var printaErros = "";
+            cc.errors.forEach(element => printaErros += element.message + "\n");
+
+            $("#encrypted_value").val(printaErros);
+          } else {
+            $("#encrypted_value").val(cc.encryptedCard);
+          }
         }
       })
     });
