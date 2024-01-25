@@ -1,22 +1,34 @@
 <!DOCTYPE html>
 
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="3DS Pags">
-  <meta name="author" content="Lucas Parente">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="3DS Pags" />
+  <meta name="author" content="Lucas Parente" />
   <title>Teste 3DS PAGS</title>
 
-  <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <!-- Optional theme -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">
-  <!-- jQuery library -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-  <!-- Latest compiled JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  <!-- pags.js -->
+  <!-- Bootstrap 5.3.2 -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+    crossorigin="anonymous"
+  />
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"
+  ></script>
+
+  <!-- JQuery -->
+  <script
+    src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+    crossorigin="anonymous"
+  ></script>
+
+  <!-- PagSeguro.js -->
   <script src="https://assets.pagseguro.com.br/checkout-sdk-js/rc/dist/browser/pagseguro.min.js"></script>
 
   <script type="text/javascript">
@@ -27,16 +39,36 @@
       //   // $("#session3ds").val(session)
       // });
       {
-        let cb1 = document.getElementById("sameAddressCheck").checked
-        listaShipping = ["streetShipping", "numberShipping", "complementShipping", "regionCodeShipping", "countryShipping", "cityShipping", "postalCodeShipping"]
-        listaShipping.forEach((element) => document.getElementById(element).disabled = cb1)
-      };
+        let cb1 = document.getElementById("sameAddressCheck").checked;
+        listaShipping = [
+          "streetShipping",
+          "numberShipping",
+          "complementShipping",
+          "regionCodeShipping",
+          "countryShipping",
+          "cityShipping",
+          "postalCodeShipping",
+        ];
+        listaShipping.forEach(
+          (element) => (document.getElementById(element).disabled = cb1)
+        );
+      }
 
       $("#sameAddressCheck").click(function () {
-        let cb1 = document.getElementById("sameAddressCheck").checked
+        let cb1 = document.getElementById("sameAddressCheck").checked;
         console.log(cb1);
-        listaShipping = ["streetShipping", "numberShipping", "complementShipping", "regionCodeShipping", "countryShipping", "cityShipping", "postalCodeShipping"]
-        listaShipping.forEach((element) => document.getElementById(element).disabled = cb1)
+        listaShipping = [
+          "streetShipping",
+          "numberShipping",
+          "complementShipping",
+          "regionCodeShipping",
+          "countryShipping",
+          "cityShipping",
+          "postalCodeShipping",
+        ];
+        listaShipping.forEach(
+          (element) => (document.getElementById(element).disabled = cb1)
+        );
       });
 
       $("#3ds_auth").click(function () {
@@ -50,9 +82,9 @@
                   country: $("#Country").val(),
                   area: $("#DDD").val(),
                   number: $("#Phone").val(),
-                  type: 'MOBILE'
-                }
-              ]
+                  type: "MOBILE",
+                },
+              ],
             },
             paymentMethod: {
               type: $("#metodoPagamento").val(),
@@ -63,15 +95,15 @@
                 expYear: $("#year").val(),
                 holder: {
                   name: $("#holder").val(),
-                }
-              }
+                },
+              },
             },
             amount: {
               value: $("#price").val(),
-              currency: 'BRL'
+              currency: "BRL",
             },
-            dataOnly: false
-          }
+            dataOnly: false,
+          },
         };
 
         if (document.getElementById("sameAddressCheck").checked) {
@@ -93,7 +125,7 @@
               country: $("#country").val(),
               city: $("#city").val(),
               postalCode: $("#postalCode").val(),
-            }
+            },
           });
         } else {
           Object.assign(request.data, {
@@ -114,70 +146,84 @@
               country: $("#countryShipping").val(),
               city: $("#cityShipping").val(),
               postalCode: $("#postalCodeShipping").val(),
-            }
+            },
           });
-        };
+        }
 
         console.log(request);
 
         PagSeguro.setUp({
           session: $("#session3ds").val(),
-          env: $("#env3ds").val()
+          env: $("#env3ds").val(),
         });
-        PagSeguro.authenticate3DS(request).then(result => {
-          let authenticationStatus = result.status;
-          switch (authenticationStatus) {
-            case 'AUTH_FLOW_COMPLETED':
-              let authenticationId = result.id;  // Seguir o fluxo para cobrança repassando o authenticationId para a API de Cobrança.
-              console.log(authenticationStatus + "\n ID 3DS:" + authenticationId);
-              $("#3ds_autentication").val(authenticationId);
-              break;
-            case 'AUTH_NOT_SUPPORTED':   // Cartão não elegível ao 3DS. Para o meio de pagamento `DÉBITO` a transação deve ser finalizada após este retorno.
-              $("#3ds_autentication").val(authenticationStatus + " - Cartão não elegível ao 3DS. Para o meio de pagamento `DÉBITO` a transação deve ser finalizada após este retorno.");
-              break;
-            case 'CHANGE_PAYMENT_METHOD':  // Solicite que o comprador troque o meio de pagamento, pois o mesmo não será aceito na cobrança.
-              $("#3ds_autentication").val(authenticationStatus + " - Solicite que o comprador troque o meio de pagamento, pois o mesmo não será aceito na cobrança.");
-              break;
-          }
-        }).catch(err => {
-          if (err instanceof PagSeguro.PagSeguroError) {   // No objeto de err podem ser encontrados mais detalhes sobre o erro.
-            let errDetail = err.detail;
-            console.log(errDetail)
-            $("#3ds_autentication").val(errDetail.message);
-          }
-        });
+        PagSeguro.authenticate3DS(request)
+          .then((result) => {
+            let authenticationStatus = result.status;
+            switch (authenticationStatus) {
+              case "AUTH_FLOW_COMPLETED":
+                let authenticationId = result.id; // Seguir o fluxo para cobrança repassando o authenticationId para a API de Cobrança.
+                console.log(
+                  authenticationStatus + "\n ID 3DS:" + authenticationId
+                );
+                $("#3ds_autentication").val(authenticationId);
+                break;
+              case "AUTH_NOT_SUPPORTED": // Cartão não elegível ao 3DS. Para o meio de pagamento `DÉBITO` a transação deve ser finalizada após este retorno.
+                $("#3ds_autentication").val(
+                  authenticationStatus +
+                    " - Cartão não elegível ao 3DS. Para o meio de pagamento `DÉBITO` a transação deve ser finalizada após este retorno."
+                );
+                break;
+              case "CHANGE_PAYMENT_METHOD": // Solicite que o comprador troque o meio de pagamento, pois o mesmo não será aceito na cobrança.
+                $("#3ds_autentication").val(
+                  authenticationStatus +
+                    " - Solicite que o comprador troque o meio de pagamento, pois o mesmo não será aceito na cobrança."
+                );
+                break;
+            }
+          })
+          .catch((err) => {
+            if (err instanceof PagSeguro.PagSeguroError) {
+              // No objeto de err podem ser encontrados mais detalhes sobre o erro.
+              let errDetail = err.detail;
+              console.log(errDetail);
+              $("#3ds_autentication").val(errDetail.message);
+            }
+          });
       });
 
       $("#encryptCard").click(function () {
         if (!$("#public_key").val()) {
-          console.log('entrou no get public');
+          console.log("entrou no get public");
           var myHeaders = new Headers();
           myHeaders.append("Authorization", "Bearer " + $("#session3ds").val());
 
           var requestOptions = {
-            method: 'GET',
+            method: "GET",
             headers: myHeaders,
-            redirect: 'follow'
+            redirect: "follow",
           };
 
-          fetch("https://sandbox.sdk.pagseguro.com/checkout-sdk/public-key", requestOptions)
-            .then(response => response.json())
+          fetch(
+            "https://sandbox.sdk.pagseguro.com/checkout-sdk/public-key",
+            requestOptions
+          )
+            .then((response) => response.json())
             // .then(result => console.log(result))
-            .then(result => {
+            .then((result) => {
               console.log(result.publicKey);
-              $("#public_key").val(result.publicKey)
+              $("#public_key").val(result.publicKey);
               var cc = PagSeguro.encryptCard({
-                number: $("#cardnumber").val().replace(/\s/g, ''),
+                number: $("#cardnumber").val().replace(/\s/g, ""),
                 securityCode: $("#cvc").val(),
                 expMonth: $("#month").val(),
                 expYear: $("#year").val(),
                 publicKey: $("#public_key").val(),
-                holder: $("#holder").val()
+                holder: $("#holder").val(),
               });
               console.log(cc);
               if (cc.hasErrors) {
                 var printaErros = "";
-                cc.errors.forEach(element => {
+                cc.errors.forEach((element) => {
                   printaErros += element.message + "\n";
                 });
 
@@ -186,38 +232,31 @@
                 $("#encrypted_value").val(cc.encryptedCard);
               }
             })
-            .catch(error => console.log('error', error));
-
+            .catch((error) => console.log("error", error));
         } else {
           var cc = PagSeguro.encryptCard({
-            number: $("#cardnumber").val().replace(/\s/g, ''),
+            number: $("#cardnumber").val().replace(/\s/g, ""),
             securityCode: $("#cvc").val(),
             expMonth: $("#month").val(),
             expYear: $("#year").val(),
             publicKey: $("#public_key").val(),
-            holder: $("#holder").val()
+            holder: $("#holder").val(),
           });
           console.log(cc);
           if (cc.hasErrors) {
             var printaErros = "";
-            cc.errors.forEach(element => printaErros += element.message + "\n");
+            cc.errors.forEach(
+              (element) => (printaErros += element.message + "\n")
+            );
 
             $("#encrypted_value").val(printaErros);
           } else {
             $("#encrypted_value").val(cc.encryptedCard);
           }
         }
-      })
+      });
     });
-
   </script>
-
-  <style>
-    .classMaster {
-      display: flex;
-      justify-content: center;
-    }
-  </style>
 </head>
 
 <body>
@@ -225,47 +264,102 @@
   <div class="text-center">
     <a href="index.html">Criptografia Comum</a>
   </div>
-  <hr>
+  <hr />
   <form>
-    <div class="classMaster">
+    <div class="row justify-content-center">
       <div class="form-group col-sm-3">
         <label>Public Key</label>
-        <textarea id="public_key" rows="12" placeholder="Enter Public Key" class="form-control"></textarea>
-        <br>
+        <textarea
+          id="public_key"
+          rows="12"
+          placeholder="Enter Public Key"
+          class="form-control"
+        ></textarea>
+        <br />
         <label>Credit Card Hash</label>
-        <textarea id="encrypted_value" rows="8" class="form-control" disabled></textarea>
-        <br>
+        <textarea
+          id="encrypted_value"
+          rows="8"
+          class="form-control"
+          disabled
+        ></textarea>
+        <br />
         <label>3DS ID</label>
-        <textarea id="3ds_autentication" rows="2" class="form-control" disabled></textarea>
+        <textarea
+          id="3ds_autentication"
+          rows="2"
+          class="form-control"
+          disabled
+        ></textarea>
       </div>
       <div class="form-group col-sm-3">
         <div class="form-group">
           <label>CC Holder</label>
-          <input type="text" placeholder="Holder" id="holder" value="Joãozinho da Silva" class="form-control">
-          <br>
+          <input
+            type="text"
+            placeholder="Holder"
+            id="holder"
+            value="Joãozinho da Silva"
+            class="form-control"
+          />
+          <br />
           <label>Credit card number</label>
-          <input type="text" placeholder="Credit card number" id="cardnumber" value="5200000000001096"
-            inputmode="numeric" pattern="[0-9]{15,16}" minlength="15" maxlength="16" class="form-control">
-          <br>
+          <input
+            type="text"
+            placeholder="Credit card number"
+            id="cardnumber"
+            value="5200000000001096"
+            inputmode="numeric"
+            pattern="[0-9]{15,16}"
+            minlength="15"
+            maxlength="16"
+            class="form-control"
+          />
+          <br />
           <div class="row">
             <div class="col-md-4">
               <label>CVC</label>
-              <input type="number" placeholder="CVC" id="cvc" value="123" min="0000" max="9999"
-                class="form-control"><br>
+              <input
+                type="number"
+                placeholder="CVC"
+                id="cvc"
+                value="123"
+                min="0000"
+                max="9999"
+                class="form-control"
+              /><br />
             </div>
             <div class="col-md-4">
               <label>Exp Month</label>
-              <input type="number" placeholder="Month" id="month" value="12" min="1" max="12" pattern="[0-9]{2}"
-                class="form-control" required=""><br>
+              <input
+                type="number"
+                placeholder="Month"
+                id="month"
+                value="12"
+                min="1"
+                max="12"
+                pattern="[0-9]{2}"
+                class="form-control"
+                required=""
+              /><br />
             </div>
             <div class="col-md-4">
               <label>Exp Year</label>
-              <input type="number" placeholder="Year" id="year" value="2030" min="1900" max="2099" pattern="[0-9]{4}"
-                class="form-control" required=""><br>
+              <input
+                type="number"
+                placeholder="Year"
+                id="year"
+                value="2030"
+                min="1900"
+                max="2099"
+                pattern="[0-9]{4}"
+                class="form-control"
+                required=""
+              /><br />
             </div>
           </div>
         </div>
-        <br>
+        <br />
 
         <div class="row">
           <div class="col-md-6">
@@ -287,77 +381,211 @@
           </div>
           <div class="col-md-6">
             <label for="price">Preço</label>
-            <input type="number" placeholder="Value in cents" id="price" value=1096 class="form-control">
+            <input
+              type="number"
+              placeholder="Value in cents"
+              id="price"
+              value="1096"
+              class="form-control"
+            />
           </div>
         </div>
 
-        <br>
+        <br />
         <label for="metodoPagamento">Payment Form</label>
         <select class="form-control" id="metodoPagamento">
           <option>DEBIT_CARD</option>
           <option>CREDIT_CARD</option>
         </select>
-        <br>
+        <br />
         <div class="form-group">
           <label for="env3ds">Environment</label>
           <select class="form-control" id="env3ds">
             <option>SANDBOX</option>
             <option>PROD</option>
           </select>
-          <br>
+          <br />
           <label>Sessão 3DS</label>
-          <textarea id="session3ds" placeholder="Token de sessão" rows="2" class="form-control"></textarea>
+          <textarea
+            id="session3ds"
+            placeholder="Token de sessão"
+            rows="2"
+            class="form-control"
+          ></textarea>
         </div>
-        <br>
-        <input type="button" value="Encrypt" id="encryptCard" class="btn btn-lg btn-success btn-block">
-        <br>
-        <input type="button" value="3DS Auth" id="3ds_auth" class="btn btn-lg btn-success btn-block">
+        <div class="d-grid gap-2">
+          <br />
+          <input
+            type="button"
+            value="Encrypt"
+            id="encryptCard"
+            class="btn btn-success btn-block"
+          />
+          <input
+            type="button"
+            value="3DS Auth"
+            id="3ds_auth"
+            class="btn btn-success btn-block"
+          />
+        </div>
       </div>
       <div class="form-group col-sm-3">
         <div class="form-group">
           <label>Customer Info</label>
-          <input type="text" placeholder="Holder" id="customer" value="Joãozinho da Silva" class="form-control"><br>
+          <input
+            type="text"
+            placeholder="Holder"
+            id="customer"
+            value="Joãozinho da Silva"
+            class="form-control"
+          /><br />
           <label>Mail</label>
-          <input type="email" placeholder="e-mail" id="mail" value="joaozinho123@teste.com" class="form-control"><br>
+          <input
+            type="email"
+            placeholder="e-mail"
+            id="mail"
+            value="joaozinho123@teste.com"
+            class="form-control"
+          /><br />
           <label>Phone Info</label>
           <div class="row">
             <div class="col-md-4">
-              <input type="text" placeholder="Country" value=55 id="Country" class="form-control">
+              <input
+                type="text"
+                placeholder="Country"
+                value="55"
+                id="Country"
+                class="form-control"
+              />
             </div>
             <div class="col-md-4">
-              <input type="text" placeholder="DDD" value=11 id="DDD" class="form-control">
+              <input
+                type="text"
+                placeholder="DDD"
+                value="11"
+                id="DDD"
+                class="form-control"
+              />
             </div>
             <div class="col-md-4">
-              <input type="text" placeholder="Phone" value=999999999 id="Phone" class="form-control">
+              <input
+                type="text"
+                placeholder="Phone"
+                value="999999999"
+                id="Phone"
+                class="form-control"
+              />
             </div>
           </div>
-          <br>
+          <br />
           <label>Billing Address</label>
           <div class="form-group">
-            <input type="text" placeholder="street" id="street" class="form-control" value="Rua Doutor Mario Ferraz">
-            <input type="text" placeholder="number" id="number" class="form-control" value="123">
-            <input type="text" placeholder="complement" id="complement" class="form-control" value="123">
-            <input type="text" placeholder="state" id="regionCode" class="form-control" value="SP">
-            <input type="text" placeholder="country" id="country" class="form-control" value="BRA">
-            <input type="text" placeholder="city" id="city" class="form-control" value="Sao Paulo">
-            <input type="text" placeholder="postalCode" id="postalCode" class="form-control" value="01453010">
+            <input
+              type="text"
+              placeholder="street"
+              id="street"
+              class="form-control"
+              value="Rua Doutor Mario Ferraz"
+            />
+            <input
+              type="text"
+              placeholder="number"
+              id="number"
+              class="form-control"
+              value="123"
+            />
+            <input
+              type="text"
+              placeholder="complement"
+              id="complement"
+              class="form-control"
+              value="123"
+            />
+            <input
+              type="text"
+              placeholder="state"
+              id="regionCode"
+              class="form-control"
+              value="SP"
+            />
+            <input
+              type="text"
+              placeholder="country"
+              id="country"
+              class="form-control"
+              value="BRA"
+            />
+            <input
+              type="text"
+              placeholder="city"
+              id="city"
+              class="form-control"
+              value="Sao Paulo"
+            />
+            <input
+              type="text"
+              placeholder="postalCode"
+              id="postalCode"
+              class="form-control"
+              value="01453010"
+            />
           </div>
-          <br>
+          <br />
           <label>Shipping Address</label>
           <div class="form-group">
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="sameAddressCheck">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value=""
+                id="sameAddressCheck"
+              />
               <label class="form-check-label" for="sameAddressCheck">
                 Mesmo endereço?
               </label>
             </div>
-            <input type="text" placeholder="street" id="streetShipping" class="form-control">
-            <input type="text" placeholder="number" id="numberShipping" class="form-control">
-            <input type="text" placeholder="complement" id="complementShipping" class="form-control">
-            <input type="text" placeholder="state" id="regionCodeShipping" class="form-control">
-            <input type="text" placeholder="country" id="countryShipping" class="form-control">
-            <input type="text" placeholder="city" id="cityShipping" class="form-control">
-            <input type="text" placeholder="postalCode" id="postalCodeShipping" class="form-control">
+            <input
+              type="text"
+              placeholder="street"
+              id="streetShipping"
+              class="form-control"
+            />
+            <input
+              type="text"
+              placeholder="number"
+              id="numberShipping"
+              class="form-control"
+            />
+            <input
+              type="text"
+              placeholder="complement"
+              id="complementShipping"
+              class="form-control"
+            />
+            <input
+              type="text"
+              placeholder="state"
+              id="regionCodeShipping"
+              class="form-control"
+            />
+            <input
+              type="text"
+              placeholder="country"
+              id="countryShipping"
+              class="form-control"
+            />
+            <input
+              type="text"
+              placeholder="city"
+              id="cityShipping"
+              class="form-control"
+            />
+            <input
+              type="text"
+              placeholder="postalCode"
+              id="postalCodeShipping"
+              class="form-control"
+            />
           </div>
         </div>
       </div>
