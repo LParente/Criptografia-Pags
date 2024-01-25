@@ -22,6 +22,8 @@
 
   <!-- PagSeguro.js -->
   <script src="https://assets.pagseguro.com.br/checkout-sdk-js/rc/dist/browser/pagseguro.min.js"></script>
+
+  <script src="function.js"></script>
 </head>
 
 
@@ -49,12 +51,6 @@
       }
     })
   });
-
-  function copyHash() {
-    // Get the text field
-    navigator.clipboard.writeText(document.getElementById("encrypted_value").value);
-  }
-
 </script>
 
 <body>
@@ -93,7 +89,7 @@
       <textarea id="public_key" rows="15" placeholder="Enter Public Key" class="form-control"></textarea></br>
       <div class="row-md-6 justify-content-evenly">
         <label>Credit Card Hash</label>
-        <button type="button" class="btn btn-outline-success btn-sm" onclick="copyHash()">Copiar</button>
+        <button type="button" class="btn btn-outline-success btn-sm" onclick="copyText('encrypted_value')">Copiar</button>
       </div>
       </br>
       <textarea id="encrypted_value" rows="8" class="form-control" disabled=""></textarea></br>
