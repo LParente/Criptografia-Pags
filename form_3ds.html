@@ -9,24 +9,15 @@
   <title>Teste 3DS PAGS</title>
 
   <!-- Bootstrap 5.3.2 -->
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-    crossorigin="anonymous"
-  />
-  <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-    crossorigin="anonymous"
-  ></script>
+    crossorigin="anonymous"></script>
 
   <!-- JQuery -->
-  <script
-    src="https://code.jquery.com/jquery-3.7.1.min.js"
-    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-    crossorigin="anonymous"
-  ></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
   <!-- PagSeguro.js -->
   <script src="https://assets.pagseguro.com.br/checkout-sdk-js/rc/dist/browser/pagseguro.min.js"></script>
@@ -35,39 +26,26 @@
 
   <script type="text/javascript">
     $(document).ready(function () {
-      // $("#create_session_3ds").click(function () {
-      //   let xhttp = new XMLHttpRequest();
-      //   requestSession3DS($("#accountToken").val(), xhttp)
-      //   // $("#session3ds").val(session)
-      // });
-      {
-        let cb1 = document.getElementById("sameAddressCheck").checked;
-        listaShipping = [
-          "streetShipping",
-          "numberShipping",
-          "complementShipping",
-          "regionCodeShipping",
-          "countryShipping",
-          "cityShipping",
-          "postalCodeShipping",
-        ];
-        listaShipping.forEach(
-          (element) => (document.getElementById(element).disabled = cb1)
-        );
-      }
+     
+      const listaShipping = [
+        "streetShipping",
+        "numberShipping",
+        "complementShipping",
+        "regionCodeShipping",
+        "countryShipping",
+        "cityShipping",
+        "postalCodeShipping",
+      ];
+
+      let cb1 = document.getElementById("sameAddressCheck").checked;
+      listaShipping.forEach(
+        (element) => (document.getElementById(element).disabled = cb1)
+      );
+
 
       $("#sameAddressCheck").click(function () {
         let cb1 = document.getElementById("sameAddressCheck").checked;
         console.log(cb1);
-        listaShipping = [
-          "streetShipping",
-          "numberShipping",
-          "complementShipping",
-          "regionCodeShipping",
-          "countryShipping",
-          "cityShipping",
-          "postalCodeShipping",
-        ];
         listaShipping.forEach(
           (element) => (document.getElementById(element).disabled = cb1)
         );
@@ -104,7 +82,7 @@
               value: $("#price").val(),
               currency: "BRL",
             },
-            dataOnly: true,
+            dataOnly: $("#dataOnly").val(),
           },
         };
 
@@ -172,13 +150,13 @@
               case "AUTH_NOT_SUPPORTED": // Cartão não elegível ao 3DS. Para o meio de pagamento `DÉBITO` a transação deve ser finalizada após este retorno.
                 $("#3ds_autentication").val(
                   authenticationStatus +
-                    " - Cartão não elegível ao 3DS. Para o meio de pagamento `DÉBITO` a transação deve ser finalizada após este retorno."
+                  " - Cartão não elegível ao 3DS. Para o meio de pagamento `DÉBITO` a transação deve ser finalizada após este retorno."
                 );
                 break;
               case "CHANGE_PAYMENT_METHOD": // Solicite que o comprador troque o meio de pagamento, pois o mesmo não será aceito na cobrança.
                 $("#3ds_autentication").val(
                   authenticationStatus +
-                    " - Solicite que o comprador troque o meio de pagamento, pois o mesmo não será aceito na cobrança."
+                  " - Solicite que o comprador troque o meio de pagamento, pois o mesmo não será aceito na cobrança."
                 );
                 break;
             }
@@ -271,99 +249,46 @@
     <div class="row justify-content-center">
       <div class="form-group col-sm-3">
         <label>Public Key</label>
-        <textarea
-          id="public_key"
-          rows="12"
-          placeholder="Enter Public Key"
-          class="form-control"
-        ></textarea>
+        <textarea id="public_key" rows="12" placeholder="Enter Public Key" class="form-control"></textarea>
         <br />
         <div class="row-md-6 justify-content-evenly">
           <label>Credit Card Hash</label>
-          <button type="button" class="btn btn-outline-success btn-sm" onclick="copyText('encrypted_value')">Copiar</button>
+          <button type="button" class="btn btn-outline-success btn-sm"
+            onclick="copyText('encrypted_value')">Copiar</button>
         </div>
-        <textarea
-          id="encrypted_value"
-          rows="8"
-          class="form-control"
-          disabled
-        ></textarea>
+        <textarea id="encrypted_value" rows="8" class="form-control" disabled></textarea>
         <br />
         <div class="row-md-6 justify-content-evenly">
           <label>3DS ID</label>
-          <button type="button" class="btn btn-outline-success btn-sm" onclick="copyText('3ds_autentication')">Copiar</button>
+          <button type="button" class="btn btn-outline-success btn-sm"
+            onclick="copyText('3ds_autentication')">Copiar</button>
         </div>
-        <textarea
-          id="3ds_autentication"
-          rows="2"
-          class="form-control"
-          disabled
-        ></textarea>
+        <textarea id="3ds_autentication" rows="2" class="form-control" disabled></textarea>
       </div>
       <div class="form-group col-sm-3">
         <div class="form-group">
           <label>CC Holder</label>
-          <input
-            type="text"
-            placeholder="Holder"
-            id="holder"
-            value="Joãozinho da Silva"
-            class="form-control"
-          />
+          <input type="text" placeholder="Holder" id="holder" value="Joãozinho da Silva" class="form-control" />
           <br />
           <label>Credit card number</label>
-          <input
-            type="text"
-            placeholder="Credit card number"
-            id="cardnumber"
-            value="5200000000001096"
-            inputmode="numeric"
-            pattern="[0-9]{15,16}"
-            minlength="15"
-            maxlength="16"
-            class="form-control"
-          />
+          <input type="text" placeholder="Credit card number" id="cardnumber" value="5200000000001096"
+            inputmode="numeric" pattern="[0-9]{15,16}" minlength="15" maxlength="16" class="form-control" />
           <br />
           <div class="row">
             <div class="col-md-4">
               <label>CVC</label>
-              <input
-                type="number"
-                placeholder="CVC"
-                id="cvc"
-                value="123"
-                min="0000"
-                max="9999"
-                class="form-control"
-              /><br />
+              <input type="number" placeholder="CVC" id="cvc" value="123" min="0000" max="9999"
+                class="form-control" /><br />
             </div>
             <div class="col-md-4">
               <label>Exp Month</label>
-              <input
-                type="number"
-                placeholder="Month"
-                id="month"
-                value="12"
-                min="1"
-                max="12"
-                pattern="[0-9]{2}"
-                class="form-control"
-                required=""
-              /><br />
+              <input type="number" placeholder="Month" id="month" value="12" min="1" max="12" pattern="[0-9]{2}"
+                class="form-control" required="" /><br />
             </div>
             <div class="col-md-4">
               <label>Exp Year</label>
-              <input
-                type="number"
-                placeholder="Year"
-                id="year"
-                value="2030"
-                min="1900"
-                max="2099"
-                pattern="[0-9]{4}"
-                class="form-control"
-                required=""
-              /><br />
+              <input type="number" placeholder="Year" id="year" value="2030" min="1900" max="2099" pattern="[0-9]{4}"
+                class="form-control" required="" /><br />
             </div>
           </div>
         </div>
@@ -389,13 +314,7 @@
           </div>
           <div class="col-md-6">
             <label for="price">Preço</label>
-            <input
-              type="number"
-              placeholder="Value in cents"
-              id="price"
-              value="1096"
-              class="form-control"
-            />
+            <input type="number" placeholder="Value in cents" id="price" value="1096" class="form-control" />
           </div>
         </div>
 
@@ -406,194 +325,77 @@
           <option>CREDIT_CARD</option>
         </select>
         <br />
-        <div class="form-group">
-          <label for="env3ds">Environment</label>
-          <select class="form-control" id="env3ds">
-            <option>SANDBOX</option>
-            <option>PROD</option>
-          </select>
+        <div class="row">
+          <div class="col-md-6">
+            <label for="env3ds">Environment</label>
+            <select class="form-control" id="env3ds">
+              <option>SANDBOX</option>
+              <option>PROD</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label for="dataOnly">Data Only?</label>
+            <select class="form-control" id="dataOnly">
+              <option>false</option>
+              <option>true</option>
+            </select>
+          </div>
           <br />
           <label>Sessão 3DS</label>
-          <textarea
-            id="session3ds"
-            placeholder="Token de sessão"
-            rows="2"
-            class="form-control"
-          ></textarea>
+          <textarea id="session3ds" placeholder="Token de sessão" rows="2" class="form-control"></textarea>
         </div>
         <div class="d-grid gap-2">
           <br />
-          <input
-            type="button"
-            value="Encrypt"
-            id="encryptCard"
-            class="btn btn-success btn-block"
-          />
-          <input
-            type="button"
-            value="3DS Auth"
-            id="3ds_auth"
-            class="btn btn-success btn-block"
-          />
+          <input type="button" value="Encrypt" id="encryptCard" class="btn btn-success btn-block" />
+          <input type="button" value="3DS Auth" id="3ds_auth" class="btn btn-success btn-block" />
         </div>
       </div>
       <div class="form-group col-sm-3">
         <div class="form-group">
           <label>Customer Info</label>
-          <input
-            type="text"
-            placeholder="Holder"
-            id="customer"
-            value="Joãozinho da Silva"
-            class="form-control"
-          /><br />
+          <input type="text" placeholder="Holder" id="customer" value="Joãozinho da Silva" class="form-control" /><br />
           <label>Mail</label>
-          <input
-            type="email"
-            placeholder="e-mail"
-            id="mail"
-            value="joaozinho123@teste.com"
-            class="form-control"
-          /><br />
+          <input type="email" placeholder="e-mail" id="mail" value="joaozinho123@teste.com"
+            class="form-control" /><br />
           <label>Phone Info</label>
           <div class="row">
             <div class="col-md-4">
-              <input
-                type="text"
-                placeholder="Country"
-                value="55"
-                id="Country"
-                class="form-control"
-              />
+              <input type="text" placeholder="Country" value="55" id="Country" class="form-control" />
             </div>
             <div class="col-md-4">
-              <input
-                type="text"
-                placeholder="DDD"
-                value="11"
-                id="DDD"
-                class="form-control"
-              />
+              <input type="text" placeholder="DDD" value="11" id="DDD" class="form-control" />
             </div>
             <div class="col-md-4">
-              <input
-                type="text"
-                placeholder="Phone"
-                value="999999999"
-                id="Phone"
-                class="form-control"
-              />
+              <input type="text" placeholder="Phone" value="999999999" id="Phone" class="form-control" />
             </div>
           </div>
           <br />
           <label>Billing Address</label>
           <div class="form-group">
-            <input
-              type="text"
-              placeholder="street"
-              id="street"
-              class="form-control"
-              value="Rua Doutor Mario Ferraz"
-            />
-            <input
-              type="text"
-              placeholder="number"
-              id="number"
-              class="form-control"
-              value="123"
-            />
-            <input
-              type="text"
-              placeholder="complement"
-              id="complement"
-              class="form-control"
-              value="123"
-            />
-            <input
-              type="text"
-              placeholder="state"
-              id="regionCode"
-              class="form-control"
-              value="SP"
-            />
-            <input
-              type="text"
-              placeholder="country"
-              id="country"
-              class="form-control"
-              value="BRA"
-            />
-            <input
-              type="text"
-              placeholder="city"
-              id="city"
-              class="form-control"
-              value="Sao Paulo"
-            />
-            <input
-              type="text"
-              placeholder="postalCode"
-              id="postalCode"
-              class="form-control"
-              value="01453010"
-            />
+            <input type="text" placeholder="street" id="street" class="form-control" value="Rua Doutor Mario Ferraz" />
+            <input type="text" placeholder="number" id="number" class="form-control" value="123" />
+            <input type="text" placeholder="complement" id="complement" class="form-control" value="123" />
+            <input type="text" placeholder="state" id="regionCode" class="form-control" value="SP" />
+            <input type="text" placeholder="country" id="country" class="form-control" value="BRA" />
+            <input type="text" placeholder="city" id="city" class="form-control" value="Sao Paulo" />
+            <input type="text" placeholder="postalCode" id="postalCode" class="form-control" value="01453010" />
           </div>
           <br />
           <label>Shipping Address</label>
           <div class="form-group">
             <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="sameAddressCheck"
-              />
+              <input class="form-check-input" type="checkbox" id="sameAddressCheck" checked/>
               <label class="form-check-label" for="sameAddressCheck">
                 Mesmo endereço?
               </label>
             </div>
-            <input
-              type="text"
-              placeholder="street"
-              id="streetShipping"
-              class="form-control"
-            />
-            <input
-              type="text"
-              placeholder="number"
-              id="numberShipping"
-              class="form-control"
-            />
-            <input
-              type="text"
-              placeholder="complement"
-              id="complementShipping"
-              class="form-control"
-            />
-            <input
-              type="text"
-              placeholder="state"
-              id="regionCodeShipping"
-              class="form-control"
-            />
-            <input
-              type="text"
-              placeholder="country"
-              id="countryShipping"
-              class="form-control"
-            />
-            <input
-              type="text"
-              placeholder="city"
-              id="cityShipping"
-              class="form-control"
-            />
-            <input
-              type="text"
-              placeholder="postalCode"
-              id="postalCodeShipping"
-              class="form-control"
-            />
+            <input type="text" placeholder="street" id="streetShipping" class="form-control" />
+            <input type="text" placeholder="number" id="numberShipping" class="form-control" />
+            <input type="text" placeholder="complement" id="complementShipping" class="form-control" />
+            <input type="text" placeholder="state" id="regionCodeShipping" class="form-control" />
+            <input type="text" placeholder="country" id="countryShipping" class="form-control" />
+            <input type="text" placeholder="city" id="cityShipping" class="form-control" />
+            <input type="text" placeholder="postalCode" id="postalCodeShipping" class="form-control" />
           </div>
         </div>
       </div>
