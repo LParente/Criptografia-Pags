@@ -138,6 +138,7 @@
         });
         PagSeguro.authenticate3DS(request)
           .then((result) => {
+            console.log(result);
             let authenticationStatus = result.status;
             switch (authenticationStatus) {
               case "AUTH_FLOW_COMPLETED":
