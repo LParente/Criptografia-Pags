@@ -236,6 +236,26 @@
           }
         }
       });
+      $("#deviceFingerprint").click(() => {
+        PagSeguro.setUp({
+          session: $("#session3ds").val(),
+          env: $("#env3ds").val()
+        });
+
+        PagSeguro.generateDeviceFingerprint()
+          .then(deviceFingerprint => {
+            const deviceId = deviceFingerprint.id;
+            console.log(deviceId);
+          })
+          .catch(error => {
+            if (error instanceof PagSeguro.PagSeguroError) {
+              let errDetail = error.detail;
+              console.log(errDetail)
+              $("#3ds_autentication").val(errDetail.message);
+            }
+          })
+      })
+      
     });
   </script>
 </head>
@@ -349,6 +369,7 @@
           <br />
           <input type="button" value="Encrypt" id="encryptCard" class="btn btn-success btn-block" />
           <input type="button" value="3DS Auth" id="3ds_auth" class="btn btn-success btn-block" />
+          <input type="button" value="Device Fingerprint" id="deviceFingerprint" class="btn btn-success btn-lg">
         </div>
       </div>
       <div class="form-group col-sm-3">
