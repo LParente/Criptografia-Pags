@@ -246,16 +246,16 @@
           .then(deviceFingerprint => {
             const deviceId = deviceFingerprint.id;
             console.log(deviceId);
+            $("#deviceFingerprintResult").val(errDetail.message);
           })
           .catch(error => {
             if (error instanceof PagSeguro.PagSeguroError) {
               let errDetail = error.detail;
               console.log(errDetail)
-              $("#3ds_autentication").val(errDetail.message);
+              $("#deviceFingerprintResult").val(errDetail.message);
             }
           })
       })
-      
     });
   </script>
 </head>
@@ -272,12 +272,14 @@
         <label>Public Key</label>
         <textarea id="public_key" rows="12" placeholder="Enter Public Key" class="form-control"></textarea>
         <br />
+        
         <div class="row-md-6 justify-content-evenly">
           <label>Credit Card Hash</label>
           <button type="button" class="btn btn-outline-success btn-sm"
             onclick="copyText('encrypted_value')">Copiar</button>
         </div>
         <textarea id="encrypted_value" rows="8" class="form-control" disabled></textarea>
+        
         <br />
         <div class="row-md-6 justify-content-evenly">
           <label>3DS ID</label>
@@ -285,6 +287,16 @@
             onclick="copyText('3ds_autentication')">Copiar</button>
         </div>
         <textarea id="3ds_autentication" rows="2" class="form-control" disabled></textarea>
+
+        <br />
+        <div class="row-md-6 justify-content-evenly">
+          <label>3DS ID</label>
+          <button type="button" class="btn btn-outline-success btn-sm"
+            onclick="copyText('deviceFingerprintResult')">Copiar</button>
+        </div>
+        <textarea id="deviceFingerprintResult" rows="2" class="form-control" disabled></textarea>
+
+        
       </div>
       <div class="form-group col-sm-3">
         <div class="form-group">
